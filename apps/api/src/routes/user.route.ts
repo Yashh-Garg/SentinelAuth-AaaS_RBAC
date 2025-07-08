@@ -1,0 +1,10 @@
+import express from "express";
+import { requireAuth } from "../middlewares/auth.middleware";
+import { allUsers, deleteUser, getUser, patchUser } from "../controllers/user.controller";
+import { requireRole } from "../middlewares/requireRole.middleware";
+const router = express.Router();
+router.get('/me', requireAuth, getUser);
+router.get('/', requireAuth, requireRole("admin"), allUsers);
+router.delete('/:id', requireAuth, requireRole("admin"), deleteUser);
+router.patch('/:id', requireAuth, requireRole("admin"), patchUser);
+export default router;  
